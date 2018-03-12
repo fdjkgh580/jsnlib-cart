@@ -20,11 +20,11 @@ class Cart {
 		$this->param_isarray($param);
 		$required = array
 		(
-			'primaryid'	=>	0,
-			'name'	=>	0,
-			'quantity'	=>	0,
-			'price'		=>	0,
-			'option'	=>	0
+			'primaryid' =>	0,
+			'name'      =>	0,
+			'quantity'  =>	0,
+			'price'     =>	0,
+			'option'    =>	0
 		);
 		
 		//有出現的鍵	
@@ -41,7 +41,7 @@ class Cart {
 	public function isnew($primaryid) 
 	{
 		$key = $primaryid;
-		return empty($_SESSION[$this->sess][$key]) ? "1" : "0";
+		return empty($_SESSION[$this->sess][$key]) ? true : false;
 	}	
 
 	//單項產品加總
@@ -51,15 +51,16 @@ class Cart {
 		$price		= $_SESSION[$this->sess][$key]['price'];
 		$quantity	= $_SESSION[$this->sess][$key]['quantity'];
 		$_SESSION[$this->sess][$key]['count'] = $price * $quantity;
-		return "1";
+		
+		return true;
 	}
 		
-	//新增 (回傳1新增成功; 回傳0代表商品已存在)
+	//新增 (回傳1新增成功; 回傳 false 代表商品已存在)
 	public function insert($param)
 	{
 		$this->required($param);
 		$isnew = $this->isnew($param['primaryid']);
-		if ($isnew == "0") return "0";
+		if ($isnew == false) return false;
 		
 		
 		$key = $param['primaryid'];
@@ -68,7 +69,8 @@ class Cart {
 		$_SESSION[$this->sess][$key]['quantity'] 	= $param['quantity'];
 		$_SESSION[$this->sess][$key]['option']		= $param['option'];
 		$this->single_count($param);
-		return "1";
+		
+		return true;
 	}
 	
 	//修改
@@ -78,7 +80,7 @@ class Cart {
 		if (empty($param['primaryid'])) die('請指定修改的商品primaryid');
 		
 		//不存在這項商品
-		if ($isnew == "1") return "0";
+		if ($isnew == true) return false;
 		
 		$this->param_isarray($param);
 		
@@ -86,7 +88,7 @@ class Cart {
 		if (isset($param['quantity']) and $param['quantity'] == "0")
 		{
 			$this->delete($param['primaryid']);
-			return 1;
+			return true;
 		}
 		
 		$item = $param['primaryid'];
@@ -96,7 +98,8 @@ class Cart {
 			$_SESSION[$this->sess][$item][$key] = $val;
 			$this->single_count($param);
 		}
-		return "1";
+
+		return true;
 	}
 	
 	
@@ -104,17 +107,21 @@ class Cart {
 	public function delete($primaryid)
 	{
 		//若商品本身不存在
-		if (empty($_SESSION[$this->sess][$primaryid])) return "0";
+		if (empty($_SESSION[$this->sess][$primaryid])) return false;
 		
 		unset($_SESSION[$this->sess][$primaryid]);
-		return "1";		
+
+		return true;		
 	}
 	
 	// 取得已在購物車的商品資訊
 	public function get($primaryid) 
 	{
+		if (array_key_exists($primaryid, $_SESSION[$this->sess]) == false) return false;
+
 		$res = $_SESSION[$this->sess][$primaryid];
-		return empty($res) ? "0" : $res;
+
+		return empty($res) ? false : $res;
 	}
 
 
@@ -122,7 +129,7 @@ class Cart {
 	public function truncate() 
 	{
 		unset($_SESSION[$this->sess]);
-		return empty($_SESSION[$this->sess]) ? "1" : "0";
+		return empty($_SESSION[$this->sess]) ? true : false;
 	}
 
 	// 排除的項目
