@@ -6,8 +6,11 @@ class Cart {
     // session名稱
     public $sess = 'session_jsncart';
 
-    // 參數是否為陣列
-    private function check_param_is_array($param) 
+    /**
+     * 參數是否為陣列
+     * @param  array $param 指定參數
+     */
+    private function check_param_is_array($param): bool
     { 
         if (!is_array($param)) 
             throw new \Exception('參數須要是陣列型態');
@@ -18,8 +21,11 @@ class Cart {
         return true;
     }
     
-    //檢查必要參數
-    private function required(array $param)
+    /**
+     * 檢查必要參數
+     * @param  array  $param 指定參數
+     */
+    private function required(array $param): object
     {
         $this->check_param_is_array($param);
 
@@ -38,21 +44,26 @@ class Cart {
         // 尋找値為 0 的鍵
         $res_key = array_search(0, $required);
 
-
-
         if ($res_key === 0) 
             throw new \Exception("請指定參數：{$res_key}");
         
         return $this;
     }
     
-    //加入購物車的是新商品？
+    /**
+     * 加入購物車的是新商品？
+     * @param   $primaryid  唯一編號
+     */
     public function isnew($primaryid): bool
     {
         return empty($_SESSION[$this->sess][$primaryid]) ? true : false;
-    }   
+    }
 
-    //單項產品加總
+    /**
+     * 運行單項產品加總
+     * @param   price 價格
+     * @param   quantity 數量
+     */
     private function single_count($param): bool
     {
         $key        = $param['primaryid'];
@@ -64,7 +75,11 @@ class Cart {
         return true;
     }
         
-    // 新增 (回傳 true 新增成功; 回傳 false 代表商品已存在)
+    /**
+     * 新增
+     * @param  $param 產品參數
+     * @return true 新增成功 | false 代表商品已存在
+     */
     public function insert($param): bool
     {
         $this->required($param);
@@ -81,7 +96,10 @@ class Cart {
         return true;
     }
     
-    // 修改
+    /**
+     * 修改
+     * @param  $param 產品參數
+     */
     public function update($param): bool
     {
         $isnew = $this->isnew($param['primaryid']);
@@ -113,7 +131,10 @@ class Cart {
     }
     
     
-    // 刪除
+    /**
+     * 刪除
+     * @param   $primaryid 產品唯一編號
+     */
     public function delete($primaryid): bool
     {
         // 若商品本身不存在
@@ -124,7 +145,11 @@ class Cart {
         return true;        
     }
     
-    // 取得已在購物車的商品資訊
+    /**
+     * 取得已在購物車的商品資訊
+     * @param   $primaryid 產品唯一編號
+     * @return  若不存在為 false | 返回該產品列表
+     */
     public function get($primaryid) 
     {
         if (array_key_exists($primaryid, $_SESSION[$this->sess]) == false) return false;
@@ -143,7 +168,12 @@ class Cart {
         return empty($_SESSION[$this->sess]) ? true : false;
     }
 
-    // 排除的項目
+    /**
+     * 排除的項目
+     * @param  array      $order   訂單
+     * @param  array|null $exclude 排除的 primaryid    
+     * @return 訂單列表
+     */
     protected function exclude(array $order, array $exclude = NULL): array
     {
         $newary = [];
