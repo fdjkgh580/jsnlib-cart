@@ -18,14 +18,14 @@ class Cart {
 	private function required($param) 
 	{
 		$this->param_isarray($param);
-		$required = array
-		(
+		$required = 
+		[
 			'primaryid' =>	0,
 			'name'      =>	0,
 			'quantity'  =>	0,
 			'price'     =>	0,
 			'option'    =>	0
-		);
+		];
 		
 		//有出現的鍵	
 		foreach ($param as $key => $val) $required[$key] = 1;
@@ -61,7 +61,6 @@ class Cart {
 		$this->required($param);
 		$isnew = $this->isnew($param['primaryid']);
 		if ($isnew == false) return false;
-		
 		
 		$key = $param['primaryid'];
 		$_SESSION[$this->sess][$key]['name']		= $param['name'];
@@ -135,8 +134,9 @@ class Cart {
 	// 排除的項目
 	protected function exclude($order, array $exclude = NULL) 
 	{
-		$newary = array();
+		$newary = [];
 		if (!is_array($exclude)) return $order;
+
 		foreach ($order as $key => $val)
 		{
 			if (in_array($key, $exclude)) continue;
@@ -153,7 +153,7 @@ class Cart {
 	 */
 	public function order(array $exclude = NULL)
 	{
-		$order = is_array($_SESSION[$this->sess]) ?  $_SESSION[$this->sess] : array();
+		$order = is_array($_SESSION[$this->sess]) ?  $_SESSION[$this->sess] : [];
 		$result = $this->exclude($order, $exclude);
 		return $result;
 	}
