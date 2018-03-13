@@ -4,7 +4,19 @@ namespace Jsnlib;
 class Cart {
     
     // session名稱
-    public $sess = 'session_jsncart';
+    public $sess;
+
+    public function __construct(array $param = [])
+    {
+        session_start();
+
+        $param += 
+        [
+            'sess' => 'jsnlib_cart'
+        ];
+
+        $this->sess =  $param['sess'];
+    }
 
     /**
      * 參數是否為陣列
@@ -77,10 +89,10 @@ class Cart {
         
     /**
      * 新增
-     * @param  $param 產品參數
+     * @param array $param 產品參數
      * @return true 新增成功 | false 代表商品已存在
      */
-    public function insert($param): bool
+    public function insert(array $param): bool
     {
         $this->required($param);
         $isnew = $this->isnew($param['primaryid']);
@@ -97,10 +109,10 @@ class Cart {
     }
     
     /**
-     * 修改
-     * @param  $param 產品參數
+     * 修改購物車的項目
+     * @param array $param 產品參數
      */
-    public function update($param): bool
+    public function update(array $param): bool
     {
         $isnew = $this->isnew($param['primaryid']);
 
@@ -146,7 +158,7 @@ class Cart {
     }
     
     /**
-     * 取得已在購物車的商品資訊
+     * 取得已在購物車的產品資訊
      * @param   $primaryid 產品唯一編號
      * @return  若不存在為 false | 返回該產品列表
      */

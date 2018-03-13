@@ -2,11 +2,8 @@
 /*
  * 同商品不同屬性時，primaryid也就不一樣了
  */
-session_start();
 require_once 'vendor/autoload.php';
-
-unset($_SESSION);
-$cart = new Jsnlib\Cart;
+$cart = new Jsnlib\Cart();
 
 
 //新增A款衣服XL號
