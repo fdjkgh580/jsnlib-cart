@@ -1,0 +1,70 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "e4b00a671838e5a8ee37b9cb2b9e7b01",
+    "packages": [
+        {
+            "name": "maciejczyzewski/bottomline",
+            "version": "0.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/maciejczyzewski/bottomline.git",
+                "reference": "46f29dcf874e6ff22f0e800ed1529c47d888042a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/maciejczyzewski/bottomline/zipball/46f29dcf874e6ff22f0e800ed1529c47d888042a",
+                "reference": "46f29dcf874e6ff22f0e800ed1529c47d888042a",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.8"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "bottomline.php"
+                ],
+                "psr-4": {
+                    "__\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Maciej A. Czyzewski",
+                    "email": "maciejanthonyczyzewski@gmail.com"
+                }
+            ],
+            "description": "A full-on PHP manipulation utility-belt that provides support for the usual functional.",
+            "keywords": [
+                "__",
+                "bottomline",
+                "functions",
+                "library",
+                "utility"
+            ],
+            "time": "2018-01-12T14:42:14+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": {
+        "php": ">=7.0.0"
+    },
+    "platform-dev": []
+}

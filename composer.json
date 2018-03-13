@@ -5,7 +5,8 @@
     "keywords": ["cart", "carts", "shop", "ecommerce"],
     "license": "MIT",
     "require": {
-        "php": ">=7.0.0"
+        "php": ">=7.0.0",
+        "maciejczyzewski/bottomline": ">=0.1.1"
     },
     "autoload": {
         "psr-4": {

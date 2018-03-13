@@ -6,6 +6,39 @@ require_once 'vendor/autoload.php';
 $cart = new Jsnlib\Cart();
 
 
+$cart->insert(
+[
+    'primaryid' => '0001',
+    'name'      => 'A款衣服',
+    'price'     => 100,
+    'quantity'  => 10,
+    'option'    =>      
+    [
+        'size'      => 's',
+    ]
+]);
+
+$cart->insert(
+[
+    'primaryid' => '0002',
+    'name'      => 'B款衣服',
+    'price'     => 200,
+    'quantity'  => 10,
+    'option'    =>      
+    [
+        'size'      => 'xl',
+    ]
+]);
+
+// $order = $cart->find(['quantity' => 10]); // A款衣服 + B款衣服
+$order = $cart->find(['option' => ['size' => 'xl']]); // B款衣服
+
+print_r($order);
+
+
+
+die;
+
 //新增A款衣服XL號
 $ary = 
 [

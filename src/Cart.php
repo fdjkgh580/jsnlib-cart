@@ -16,6 +16,8 @@ class Cart {
         ];
 
         $this->sess =  $param['sess'];
+        unset($_SESSION[$this->sess]);
+        $_SESSION[$this->sess] = [];
     }
 
     /**
@@ -171,6 +173,17 @@ class Cart {
         return empty($res) ? false : $res;
     }
 
+    /**
+     * 尋找
+     * @param  array  $param 可以是任和屬性
+     * @return array  若有搜尋到就返回列表，若找不到返回空陣列
+     */
+    public function find($param = []): array
+    {
+        $res = \__::where($_SESSION[$this->sess], $param);
+
+        return $res;
+    }
 
     // 清空購物車
     public function truncate(): bool

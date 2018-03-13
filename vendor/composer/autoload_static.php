@@ -6,7 +6,15 @@ namespace Composer\Autoload;
 
 class ComposerStaticInit44ba71de0079d76b2afa9b1bb1f21270
 {
+    public static $files = array (
+        '64745745f6fbbc645762f24cc3e63d54' => __DIR__ . '/..' . '/maciejczyzewski/bottomline/bottomline.php',
+    );
+
     public static $prefixLengthsPsr4 = array (
+        '_' => 
+        array (
+            '__\\' => 3,
+        ),
         'J' => 
         array (
             'Jsnlib\\' => 7,
@@ -14,6 +22,10 @@ class ComposerStaticInit44ba71de0079d76b2afa9b1bb1f21270
     );
 
     public static $prefixDirsPsr4 = array (
+        '__\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/maciejczyzewski/bottomline/src',
+        ),
         'Jsnlib\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src',

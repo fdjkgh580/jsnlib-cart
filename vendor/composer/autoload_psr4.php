@@ -6,5 +6,6 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    '__\\' => array($vendorDir . '/maciejczyzewski/bottomline/src'),
     'Jsnlib\\' => array($baseDir . '/src'),
 );
