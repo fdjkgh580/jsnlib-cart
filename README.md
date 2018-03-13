@@ -63,6 +63,37 @@ $cart->delete('JSN5000003');
 $cart->get('JSN5000000');
 ````
 
+## find($param = [])
+尋找參數相符合的列表
+````php
+$cart->insert(
+[
+    'primaryid' => '0001',
+    'name'      => 'A款衣服',
+    'price'     => 100,
+    'quantity'  => 10,
+    'option'    =>      
+    [
+        'size'      => 's',
+    ]
+]);
+
+$cart->insert(
+[
+    'primaryid' => '0002',
+    'name'      => 'B款衣服',
+    'price'     => 200,
+    'quantity'  => 10,
+    'option'    =>      
+    [
+        'size'      => 'xl',
+    ]
+]);
+
+$cart->find(['quantity' => 10]); // A款衣服 + B款衣服
+$cart->find(['option' => ['size' => 'xl']]); // B款衣服
+````
+
 ## truncate(): bool
 清空購物車
 ````php
