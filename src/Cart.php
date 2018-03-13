@@ -176,13 +176,13 @@ class Cart {
     /**
      * 尋找
      * @param  array  $param 可以是任和屬性
-     * @return array  若有搜尋到就返回列表，若找不到返回空陣列
+     * @return mix           若有搜尋到就返回列表，若找不到返回 false
      */
-    public function find($param = []): array
+    public function find($param = [])
     {
         $res = \__::where($_SESSION[$this->sess], $param);
 
-        return $res;
+        return count($res) > 0 ? $res : false;
     }
 
     // 清空購物車
