@@ -5,26 +5,18 @@
 建構子
 - sess (選)使用的 session 名稱，預設是 'jsnlib_cart'
 ````php 
+require_once 'vendor/autoload.php';
 $cart = new Jsnlib\Cart();
-或
 $cart = new Jsnlib\Cart(['sess' => 'mycart']);
 ````
 
-````php
-session_start();
-require_once 'vendor/autoload.php';
-$cart = new Jsnlib\Cart;
-````
-
-insert, update 都需要這些參數 
+### insert(array $param): bool
+將產品放入購物車
 - primaryid (string) 唯一編號
 - name (string) 產品名稱
 - quantity (int) 產品數量
 - price (int) 產品金額
 - option (array) 夾帶參數
-
-### insert(array $param): bool
-將產品放入購物車
 ````php
 $ary = 
 [
@@ -42,7 +34,7 @@ $cart->insert($ary);
 ````
 
 ### update(array $param): bool
-修改購物車的產品項目。如果5指定參數數量 quantity 為 0 時，視同刪除。
+修改購物車的產品項目。如果指定參數數量 quantity 為 0 時，視同刪除。
 
 ````php
 $ary = 
