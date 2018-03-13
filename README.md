@@ -35,7 +35,7 @@ $cart->insert($ary);
 
 ## update(array $param): bool
 修改購物車的產品項目。如果指定參數數量 quantity 為 0 時，視同刪除。
-
+- primaryid (string) 唯一編號
 ````php
 $ary = 
 [
