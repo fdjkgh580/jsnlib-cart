@@ -6,8 +6,8 @@
 - sess (選)使用的 session 名稱，預設是 'jsnlib_cart'
 ````php 
 require_once 'vendor/autoload.php';
-$cart = new Jsnlib\Cart();
-$cart = new Jsnlib\Cart(['sess' => 'mycart']);
+session_start();
+$cart = new Jsnlib\Cart('jsnlibCart');
 ````
 
 ## insert(array $param): bool

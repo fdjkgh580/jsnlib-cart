@@ -1,10 +1,10 @@
-<?
+<?php
 /*
  * 同商品不同屬性時，primaryid也就不一樣了
  */
 require_once 'vendor/autoload.php';
+session_start();
 $cart = new Jsnlib\Cart();
-
 
 $cart->insert(
 [
@@ -12,7 +12,7 @@ $cart->insert(
     'name'      => 'A款衣服',
     'price'     => 100,
     'quantity'  => 10,
-    'option'    =>      
+    'option'    =>
     [
         'size'      => 's',
     ]
@@ -24,7 +24,7 @@ $cart->insert(
     'name'      => 'B款衣服',
     'price'     => 200,
     'quantity'  => 10,
-    'option'    =>      
+    'option'    =>
     [
         'size'      => 'xl',
     ]
@@ -32,12 +32,8 @@ $cart->insert(
 
 // $order = $cart->find(['quantity' => 10]); // A款衣服 + B款衣服
 $order = $cart->find(['option' => ['size' => 'xl']]); // B款衣服
-
 print_r($order);
 
-
-
-die;
 
 //新增A款衣服XL號
 $ary = 
@@ -206,5 +202,3 @@ echo "購買商品共" .  count($order) . "件<br>";
 $res = $cart->truncate();
 if ($res === true) echo "購物車已清空！<br>";
 else echo "錯誤，購物車未清空！";
-?>
-

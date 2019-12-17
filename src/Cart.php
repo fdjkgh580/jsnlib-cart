@@ -1,23 +1,23 @@
 <?php
 namespace Jsnlib;
 
+use __;
+use Exception;
+
 class Cart {
     
     // session名稱
     public $sess;
 
-    public function __construct(array $param = [])
+    public function __construct($sess = "jsnlibCart")
     {
-        session_start();
+        $this->sess =  $sess;
 
-        $param += 
-        [
-            'sess' => 'jsnlib_cart'
-        ];
+        if (isset($_SESSION) === false) {
+            throw new Exception('請開啟 session_start()');
+        }
 
-        $this->sess =  $param['sess'];
-        unset($_SESSION[$this->sess]);
-        $_SESSION[$this->sess] = [];
+        $_SESSION[$sess] = $_SESSION[$sess] ?? [];
     }
 
     /**
@@ -27,10 +27,10 @@ class Cart {
     private function check_param_is_array($param): bool
     { 
         if (!is_array($param)) 
-            throw new \Exception('參數須要是陣列型態');
+            throw new Exception('參數須要是陣列型態');
         
         if (!empty($param['option']) and !is_array($param['option'])) 
-            throw new \Exception("參數option須要是陣列型態");
+            throw new Exception("參數option須要是陣列型態");
         
         return true;
     }
@@ -59,7 +59,7 @@ class Cart {
         $res_key = array_search(0, $required);
 
         if ($res_key === 0) 
-            throw new \Exception("請指定參數：{$res_key}");
+            throw new Exception("請指定參數：{$res_key}");
         
         return $this;
     }
@@ -88,11 +88,12 @@ class Cart {
         
         return true;
     }
-        
+
     /**
      * 新增
-     * @param array $param 產品參數
+     * @param array $param 產品參數 primaryid, name, price, quantity, *option
      * @return true 新增成功 | false 代表商品已存在
+     * @throws Exception
      */
     public function insert(array $param): bool
     {
@@ -104,21 +105,23 @@ class Cart {
         $_SESSION[$this->sess][$key]['name']     = $param['name'];
         $_SESSION[$this->sess][$key]['price']    = $param['price'];
         $_SESSION[$this->sess][$key]['quantity'] = $param['quantity'];
-        $_SESSION[$this->sess][$key]['option']   = $param['option'];
+        $_SESSION[$this->sess][$key]['option']   = $param['option'] ?? [];
         $this->single_count($param);
         
         return true;
     }
-    
+
     /**
      * 修改購物車的項目
-     * @param array $param 產品參數
+     * @param array $param 產品參數 primaryid, 其他可帶入要修改的參數
+     * @return bool
+     * @throws Exception
      */
     public function update(array $param): bool
     {
         $isnew = $this->isnew($param['primaryid']);
 
-        if (empty($param['primaryid'])) throw new \Exception('請指定修改的商品 primaryid');
+        if (empty($param['primaryid'])) throw new Exception('請指定修改的商品 primaryid');
         
         // 不存在這項商品
         if ($isnew == true) return false;
@@ -143,11 +146,12 @@ class Cart {
 
         return true;
     }
-    
-    
+
+
     /**
      * 刪除
      * @param   $primaryid 產品唯一編號
+     * @return bool
      */
     public function delete($primaryid): bool
     {
@@ -180,7 +184,7 @@ class Cart {
      */
     public function find($param = [])
     {
-        $res = \__::where($_SESSION[$this->sess], $param);
+        $res = __::where($_SESSION[$this->sess], $param);
 
         return count($res) > 0 ? $res : false;
     }
@@ -213,11 +217,12 @@ class Cart {
         $order = $newary;
         return $order;
     }
-    
-    
+
+
     /**
      * 取得帳單
-     * @param   $exclude 排除的項目
+     * @param array|null $exclude 排除的項目
+     * @return array
      */
     public function order(array $exclude = NULL): array
     {
@@ -231,7 +236,8 @@ class Cart {
 
     /**
      * 合計總額
-     * @param   $exclude 要排除的項目，將不列入計算
+     * @param array|null $exclude 要排除的項目，將不列入計算
+     * @return int
      */
     public function total(array $exclude = NULL): int
     {
