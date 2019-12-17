@@ -1,4 +1,4 @@
-<?
+<?php
 namespace Jsnlib;
 
 class Cart {
